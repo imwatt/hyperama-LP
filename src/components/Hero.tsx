@@ -264,7 +264,7 @@ const Hero = () => {
     return (
         <section
             ref={targetRef}
-            className="relative min-h-[130vh] flex items-center justify-center overflow-hidden z-10 pt-32 pb-24"
+            className="relative min-h-[100vh] lg:min-h-[130vh] flex items-center justify-center overflow-hidden z-10 pt-20 sm:pt-32 pb-12 sm:pb-24 px-4"
             aria-label="Hero section"
         >
             <FloatingEmojis />
@@ -289,12 +289,12 @@ const Hero = () => {
 
             <motion.div
                 style={{ opacity }}
-                className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-start w-full"
+                className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full"
             >
                 {/* Left Side - Text Content */}
                 <motion.div
                     style={{ y: smoothYText }}
-                    className="text-center lg:text-left z-20 pt-20"
+                    className="text-center lg:text-left z-20 pt-8 sm:pt-20"
                 >
                     {/* Badge */}
                     <motion.div
@@ -320,7 +320,7 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]"
+                        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 sm:mb-8 leading-[0.9]"
                     >
                         <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-x">
                             HYPERAMA
@@ -331,7 +331,7 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="text-xl md:text-2xl text-gray-300 mb-10 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed"
+                        className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-10 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed px-2 sm:px-0"
                     >
                         O <span className="text-purple-400 font-semibold">jogo do BBB 26</span>.
                         IA analisa os participantes. Você faz sua jogada.

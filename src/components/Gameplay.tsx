@@ -1,6 +1,20 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Trophy, User, Zap, Sparkles } from 'lucide-react';
+
+// Hook para detectar viewport mobile
+const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024); // lg breakpoint
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    return isMobile;
+};
 
 const screens = [
     {
@@ -54,13 +68,12 @@ const screens = [
                     </div>
                 </motion.div>
 
-                {/* POST 2: Instagram/News Card - with OVERFLOW */}
+                {/* POST 2: Instagram/News Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25 }}
                     className="bg-gray-900/80 rounded-xl border border-white/10 p-2 relative"
-                    style={{ marginBottom: '-40px' }}
                 >
                     {/* Category badge */}
                     <span className="inline-block px-1.5 py-0.5 rounded-full bg-green-500 text-white text-[7px] font-bold mb-1.5">📺 ESTRATÉGIA</span>
@@ -190,7 +203,176 @@ const screens = [
     }
 ];
 
-const Gameplay = () => {
+// ============================================================================
+// PHONE MOCKUP COMPONENT
+// ============================================================================
+
+interface PhoneMockupProps {
+    activeScreen: number;
+}
+
+const PhoneMockup = ({ activeScreen }: PhoneMockupProps) => (
+    <motion.div
+        className="relative w-[240px] h-[480px] sm:w-[280px] sm:h-[560px] bg-black border-[5px] sm:border-[6px] border-gray-700 rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl overflow-hidden"
+        initial={{ y: 30, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+    >
+        {/* Glass Reflection */}
+        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/15 to-transparent rounded-t-[2.5rem] pointer-events-none z-40" />
+
+        {/* Dynamic Island */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-50 flex items-center justify-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-gray-700" />
+            <div className="w-8 h-3 rounded-full bg-gray-800" />
+        </div>
+
+        {/* Screen */}
+        <div className="h-full w-full bg-gray-900 flex flex-col">
+            {/* App Header */}
+            <div
+                className={`h-20 pt-8 bg-gradient-to-r ${screens[activeScreen].color} px-4 flex items-end pb-2 justify-between transition-all duration-500`}
+            >
+                <div className="flex items-center gap-2 text-white font-semibold text-sm">
+                    {screens[activeScreen].icon}
+                    <span>Hyperama</span>
+                </div>
+                <User className="text-white/70" size={18} />
+            </div>
+
+            {/* App Content */}
+            <div className="flex-1 overflow-hidden">
+                <motion.div
+                    key={activeScreen}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="h-full"
+                >
+                    {screens[activeScreen].mockContent}
+                </motion.div>
+            </div>
+
+            {/* App Nav */}
+            <div className="h-16 bg-black/60 backdrop-blur-md border-t border-white/5 flex items-center justify-around px-4 pb-2">
+                {screens.map((s, idx) => (
+                    <motion.div
+                        key={idx}
+                        animate={{
+                            scale: idx === activeScreen ? 1.1 : 1,
+                            y: idx === activeScreen ? -2 : 0
+                        }}
+                        className={`p-2 rounded-xl transition-colors ${idx === activeScreen ? 'bg-white/20 text-white' : 'text-gray-600'}`}
+                    >
+                        {s.icon}
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Home Indicator */}
+            <div className="h-6 flex items-center justify-center">
+                <div className="w-28 h-1 bg-white/30 rounded-full" />
+            </div>
+        </div>
+    </motion.div>
+);
+
+// ============================================================================
+// MOBILE VERSION - Tabs com clique
+// ============================================================================
+
+const GameplayMobile = () => {
+    const [activeScreen, setActiveScreen] = useState(0);
+
+    return (
+        <section id="gameplay" className="relative z-10 bg-black py-16 overflow-hidden">
+            <div className="max-w-4xl mx-auto px-4">
+                {/* Section Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-8"
+                >
+                    <span className="inline-block px-4 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-sm font-bold mb-4">
+                        📱 GAMEPLAY
+                    </span>
+                    <h2 className="text-3xl font-black text-white">
+                        Veja como funciona
+                    </h2>
+                </motion.div>
+
+                {/* Tab Buttons */}
+                <div className="flex gap-2 mb-6 justify-center">
+                    {screens.map((screen, idx) => (
+                        <motion.button
+                            key={idx}
+                            onClick={() => setActiveScreen(idx)}
+                            whileTap={{ scale: 0.95 }}
+                            className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${idx === activeScreen
+                                    ? `bg-gradient-to-r ${screen.color} text-white shadow-lg`
+                                    : 'bg-white/10 text-white/60'
+                                }`}
+                        >
+                            {screen.icon}
+                        </motion.button>
+                    ))}
+                </div>
+
+                {/* Phone Mockup */}
+                <div className="flex justify-center mb-6">
+                    <div className="relative scale-[0.9]">
+                        <PhoneMockup activeScreen={activeScreen} />
+
+                        {/* Glow */}
+                        <motion.div
+                            animate={{ opacity: [0.3, 0.5, 0.3] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[400px] bg-gradient-to-tr ${screens[activeScreen].color} opacity-30 blur-[80px] -z-10`}
+                        />
+                    </div>
+                </div>
+
+                {/* Content */}
+                <motion.div
+                    key={activeScreen}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-center"
+                >
+                    <h3 className="text-2xl font-black text-white mb-2">
+                        {screens[activeScreen].title}
+                    </h3>
+                    <p className="text-gray-400 leading-relaxed px-4">
+                        {screens[activeScreen].desc}
+                    </p>
+                </motion.div>
+
+                {/* Progress Dots */}
+                <div className="flex gap-3 mt-6 justify-center">
+                    {screens.map((screen, idx) => (
+                        <motion.button
+                            key={idx}
+                            onClick={() => setActiveScreen(idx)}
+                            animate={{
+                                width: idx === activeScreen ? 40 : 12,
+                                opacity: idx === activeScreen ? 1 : 0.3
+                            }}
+                            className={`h-3 rounded-full bg-gradient-to-r ${screen.color} transition-all duration-300`}
+                        />
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================================================
+// DESKTOP VERSION - Sticky scroll original
+// ============================================================================
+
+const GameplayDesktop = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeScreen, setActiveScreen] = useState(0);
 
@@ -199,7 +381,6 @@ const Gameplay = () => {
         offset: ["start start", "end start"]
     });
 
-    // Adjusted thresholds so last screen shows earlier
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
         if (latest < 0.25) {
             if (activeScreen !== 0) setActiveScreen(0);
@@ -218,73 +399,11 @@ const Gameplay = () => {
             style={{ height: '280vh' }}
         >
             <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-                <div className="w-full max-w-6xl mx-auto px-4 flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+                <div className="w-full max-w-6xl mx-auto px-4 flex flex-row items-center gap-16">
 
                     {/* Phone Mockup */}
                     <div className="relative flex-shrink-0">
-                        <motion.div
-                            className="relative w-[280px] h-[560px] bg-black border-[6px] border-gray-700 rounded-[3rem] shadow-2xl overflow-hidden"
-                            initial={{ y: 30, opacity: 0 }}
-                            whileInView={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            {/* Glass Reflection */}
-                            <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/15 to-transparent rounded-t-[2.5rem] pointer-events-none z-40" />
-
-                            {/* Dynamic Island */}
-                            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-50 flex items-center justify-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-gray-700" />
-                                <div className="w-8 h-3 rounded-full bg-gray-800" />
-                            </div>
-
-                            {/* Screen */}
-                            <div className="h-full w-full bg-gray-900 flex flex-col">
-                                {/* App Header */}
-                                <div
-                                    className={`h-20 pt-8 bg-gradient-to-r ${screens[activeScreen].color} px-4 flex items-end pb-2 justify-between transition-all duration-500`}
-                                >
-                                    <div className="flex items-center gap-2 text-white font-semibold text-sm">
-                                        {screens[activeScreen].icon}
-                                        <span>Hyperama</span>
-                                    </div>
-                                    <User className="text-white/70" size={18} />
-                                </div>
-
-                                {/* App Content */}
-                                <div className="flex-1 overflow-hidden">
-                                    <motion.div
-                                        key={activeScreen}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.4 }}
-                                        className="h-full"
-                                    >
-                                        {screens[activeScreen].mockContent}
-                                    </motion.div>
-                                </div>
-
-                                {/* App Nav */}
-                                <div className="h-16 bg-black/60 backdrop-blur-md border-t border-white/5 flex items-center justify-around px-4 pb-2">
-                                    {screens.map((s, idx) => (
-                                        <motion.div
-                                            key={idx}
-                                            animate={{
-                                                scale: idx === activeScreen ? 1.1 : 1,
-                                                y: idx === activeScreen ? -2 : 0
-                                            }}
-                                            className={`p-2 rounded-xl transition-colors ${idx === activeScreen ? 'bg-white/20 text-white' : 'text-gray-600'}`}
-                                        >
-                                            {s.icon}
-                                        </motion.div>
-                                    ))}
-                                </div>
-
-                                {/* Home Indicator */}
-                                <div className="h-6 flex items-center justify-center">
-                                    <div className="w-28 h-1 bg-white/30 rounded-full" />
-                                </div>
-                            </div>
-                        </motion.div>
+                        <PhoneMockup activeScreen={activeScreen} />
 
                         {/* Dynamic Glow */}
                         <motion.div
@@ -295,7 +414,7 @@ const Gameplay = () => {
                     </div>
 
                     {/* Text Content */}
-                    <div className="flex-1 text-center lg:text-left">
+                    <div className="flex-1 text-left">
                         <motion.div
                             key={activeScreen}
                             initial={{ opacity: 0, x: 20 }}
@@ -305,16 +424,16 @@ const Gameplay = () => {
                             <span className="inline-block px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm font-medium mb-4">
                                 {activeScreen + 1} / 3
                             </span>
-                            <h3 className="text-3xl lg:text-5xl font-black text-white mb-4">
+                            <h3 className="text-5xl font-black text-white mb-4">
                                 {screens[activeScreen].title}
                             </h3>
-                            <p className="text-lg lg:text-xl text-gray-400 max-w-md mx-auto lg:mx-0 leading-relaxed">
+                            <p className="text-xl text-gray-400 max-w-md leading-relaxed">
                                 {screens[activeScreen].desc}
                             </p>
                         </motion.div>
 
                         {/* Progress Dots */}
-                        <div className="flex gap-3 mt-8 justify-center lg:justify-start">
+                        <div className="flex gap-3 mt-8">
                             {screens.map((screen, idx) => (
                                 <motion.div
                                     key={idx}
@@ -331,6 +450,17 @@ const Gameplay = () => {
             </div>
         </section>
     );
+};
+
+// ============================================================================
+// MAIN COMPONENT - Chooses based on viewport
+// ============================================================================
+
+const Gameplay = () => {
+    const isMobile = useIsMobile();
+
+    // Renderiza versão apropriada baseado no viewport
+    return isMobile ? <GameplayMobile /> : <GameplayDesktop />;
 };
 
 export default Gameplay;

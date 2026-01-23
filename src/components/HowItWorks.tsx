@@ -29,7 +29,7 @@ const HowItWorks = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     return (
-        <section id="how-it-works" className="relative z-10 py-24 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent overflow-hidden">
+        <section id="how-it-works" className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -47,7 +47,7 @@ const HowItWorks = () => {
                     >
                         🎮 PASSO A PASSO
                     </motion.span>
-                    <motion.h2 className="text-4xl md:text-5xl font-black text-white">
+                    <motion.h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white">
                         3 passos para dominar 🔥
                     </motion.h2>
                 </motion.div>
@@ -81,7 +81,7 @@ const HowItWorks = () => {
                                 style={{
                                     animationDelay: `${index * 0.2}s`
                                 }}
-                                className={`relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-sm border p-8 rounded-3xl text-center cursor-pointer transition-all duration-300 ${isHovered ? 'border-purple-500/70 shadow-[0_0_60px_rgba(168,85,247,0.5)] z-20' : 'border-white/10'}`}
+                                className={`relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-sm border p-5 sm:p-8 rounded-3xl text-center cursor-pointer transition-all duration-300 ${isHovered ? 'border-purple-500/70 shadow-[0_0_60px_rgba(168,85,247,0.5)] z-20' : 'border-white/10'}`}
                             >
                                 {/* Continuous wave animation when not hovered */}
                                 {!anyHovered && (

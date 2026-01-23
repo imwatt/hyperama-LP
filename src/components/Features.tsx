@@ -1,6 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Trophy, Zap, Flame, Sparkles } from 'lucide-react';
+
+// Hook para detectar viewport mobile
+const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    return isMobile;
+};
 
 const features = [
     {
@@ -35,21 +49,24 @@ const features = [
 
 const Features = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const isMobile = useIsMobile();
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
     });
 
-    // Serpentine X transforms - alternating left/right entry
-    const x1 = useTransform(scrollYProgress, [0, 0.15, 0.25], [-300, 0, 0]);
-    const x2 = useTransform(scrollYProgress, [0.1, 0.25, 0.35], [300, 0, 0]);
-    const x3 = useTransform(scrollYProgress, [0.2, 0.35, 0.45], [-300, 0, 0]);
-    const x4 = useTransform(scrollYProgress, [0.3, 0.45, 0.55], [300, 0, 0]);
+    // Serpentine X transforms - desabilitado em mobile para evitar overflow
+    const x1 = useTransform(scrollYProgress, [0, 0.15, 0.25], isMobile ? [0, 0, 0] : [-300, 0, 0]);
+    const x2 = useTransform(scrollYProgress, [0.1, 0.25, 0.35], isMobile ? [0, 0, 0] : [300, 0, 0]);
+    const x3 = useTransform(scrollYProgress, [0.2, 0.35, 0.45], isMobile ? [0, 0, 0] : [-300, 0, 0]);
+    const x4 = useTransform(scrollYProgress, [0.3, 0.45, 0.55], isMobile ? [0, 0, 0] : [300, 0, 0]);
 
-    const rotate1 = useTransform(scrollYProgress, [0, 0.15, 0.25], [-10, 0, 0]);
-    const rotate2 = useTransform(scrollYProgress, [0.1, 0.25, 0.35], [10, 0, 0]);
-    const rotate3 = useTransform(scrollYProgress, [0.2, 0.35, 0.45], [-10, 0, 0]);
-    const rotate4 = useTransform(scrollYProgress, [0.3, 0.45, 0.55], [10, 0, 0]);
+    // Rotações desabilitadas em mobile
+    const rotate1 = useTransform(scrollYProgress, [0, 0.15, 0.25], isMobile ? [0, 0, 0] : [-10, 0, 0]);
+    const rotate2 = useTransform(scrollYProgress, [0.1, 0.25, 0.35], isMobile ? [0, 0, 0] : [10, 0, 0]);
+    const rotate3 = useTransform(scrollYProgress, [0.2, 0.35, 0.45], isMobile ? [0, 0, 0] : [-10, 0, 0]);
+    const rotate4 = useTransform(scrollYProgress, [0.3, 0.45, 0.55], isMobile ? [0, 0, 0] : [10, 0, 0]);
 
     const scale1 = useTransform(scrollYProgress, [0.12, 0.2, 0.28], [0.9, 1.05, 1]);
     const scale2 = useTransform(scrollYProgress, [0.22, 0.3, 0.38], [0.9, 1.05, 1]);
@@ -69,7 +86,7 @@ const Features = () => {
     ];
 
     return (
-        <section ref={containerRef} id="features" className="relative z-10 py-32 bg-black/30">
+        <section ref={containerRef} id="features" className="relative z-10 py-16 sm:py-32 bg-black/30">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -99,7 +116,7 @@ const Features = () => {
                 </motion.div>
 
                 {/* ZIG-ZAG Layout - Stacked vertically, alternating sides */}
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-6 sm:gap-12">
                     {features.map((feature, index) => {
                         const isLeft = index % 2 === 0;
 
@@ -117,11 +134,11 @@ const Features = () => {
                                     rotate: 0,
                                     boxShadow: '0 0 60px rgba(168, 85, 247, 0.4)'
                                 }}
-                                className={`relative w-full md:w-[80%] ${isLeft ? 'md:mr-auto' : 'md:ml-auto'} overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900/90 to-black/90 border border-white/10 p-8 backdrop-blur-sm cursor-pointer group`}
+                                className={`relative w-full md:w-[80%] ${isLeft ? 'md:mr-auto' : 'md:ml-auto'} overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900/90 to-black/90 border border-white/10 p-5 sm:p-8 backdrop-blur-sm cursor-pointer group`}
                             >
-                                {/* Direction indicator */}
+                                {/* Direction indicator - hidden on mobile */}
                                 <motion.div
-                                    className={`absolute top-1/2 -translate-y-1/2 text-6xl opacity-10 ${isLeft ? '-left-4' : '-right-4'}`}
+                                    className={`hidden md:block absolute top-1/2 -translate-y-1/2 text-6xl opacity-10 ${isLeft ? '-left-4' : '-right-4'}`}
                                     animate={{ x: isLeft ? [0, 10, 0] : [0, -10, 0] }}
                                     transition={{ duration: 1.5, repeat: Infinity }}
                                 >

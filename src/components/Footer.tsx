@@ -8,7 +8,7 @@ import { JogarAgoraButton } from './shared/ParticleEffects';
 
 const FinalCTA = () => (
     <section
-        className="relative z-20 py-20 bg-gradient-to-t from-purple-950/30 to-transparent"
+        className="relative z-20 py-12 sm:py-20 bg-gradient-to-t from-purple-950/30 to-transparent"
         aria-labelledby="final-cta-heading"
     >
         <div className="max-w-4xl mx-auto px-4 text-center">
@@ -18,17 +18,17 @@ const FinalCTA = () => (
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
             >
-                <span className="text-6xl mb-6 block" role="img" aria-label="game controller">🎮</span>
+                <span className="text-5xl sm:text-6xl mb-4 sm:mb-6 block" role="img" aria-label="game controller">🎮</span>
                 <h2
                     id="final-cta-heading"
-                    className="text-4xl md:text-5xl font-black text-white mb-6"
+                    className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6"
                 >
                     Pronto para mostrar que <br />
                     <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
                         você entende de BBB 26?
                     </span>
                 </h2>
-                <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                <p className="text-lg sm:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto px-2 sm:px-0">
                     Entre no Hyperama. IA analisa os participantes, você joga, e o ranking decide quem é o expert do BBB.
                 </p>
                 <JogarAgoraButton size="large" />
@@ -49,7 +49,7 @@ const Footer = () => {
             <FinalCTA />
 
             <footer
-                className="relative z-20 bg-black border-t border-white/10 py-12"
+                className="relative z-20 bg-black border-t border-white/10 py-8 sm:py-12"
                 role="contentinfo"
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
