@@ -213,7 +213,7 @@ export const JogarAgoraButton = ({
             />
 
             <motion.a
-                href="https://hyperama.app"
+                href="https://app.hyperama.app"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 onMouseEnter={handleMouseEnter}

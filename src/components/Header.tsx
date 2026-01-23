@@ -19,7 +19,7 @@ const Header = () => {
                             <a href="#features" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Como funciona</a>
                             <a href="#gameplay" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Gameplay</a>
                             <a
-                                href="https://hyperama.app"
+                                href="https://app.hyperama.app"
                                 className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)] hover:shadow-[0_0_25px_rgba(168,85,247,0.7)]"
                             >
                                 Jogar Agora
@@ -45,7 +45,7 @@ const Header = () => {
                         <a href="#features" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Como funciona</a>
                         <a href="#gameplay" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gameplay</a>
                         <a
-                            href="https://hyperama.app"
+                            href="https://app.hyperama.app"
                             className="mt-4 w-full block text-center bg-purple-600 text-white px-4 py-3 rounded-xl font-bold"
                         >
                             Jogar Agora
