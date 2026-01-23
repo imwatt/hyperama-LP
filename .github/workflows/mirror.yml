@@ -1,0 +1,28 @@
+name: Mirror to another repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+
+      - name: Setup SSH
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.MIRROR_SSH_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          
+      - name: Push to mirror repository
+        run: |
+          git remote add mirror "git@github.com:joaoalvarenga/hyperama.git"
+          git ls-remote --heads mirror || exit 1
+          git push --mirror mirror
