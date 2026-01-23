@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+
+  /* Purple/Pink gradient colors for viral design */
+  --color-primary: #a855f7;
+  --color-secondary: #ec4899;
+
+  /* Sentiment colors */
+  --color-positive: #10b981;
+  --color-negative: #ef4444;
+  --color-neutral: #6b7280;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Hiding scrollbar for cleaner look if needed */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gradient animation for shimmer effect */
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 4s ease infinite;
+}
