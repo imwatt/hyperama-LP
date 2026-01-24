@@ -361,3 +361,180 @@ body {
   box-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
   transition: box-shadow 0.3s ease;
 }
+
+/* =============================================================================
+   FEATURES SECTION - CSS-only animations (replaces framer-motion)
+   ============================================================================= */
+
+/* Card slide animations */
+.feature-hidden {
+  opacity: 0;
+}
+
+.feature-slide-left.feature-hidden {
+  transform: translateX(-300px) rotate(-10deg) scale(0.8);
+  opacity: 0;
+}
+
+.feature-slide-right.feature-hidden {
+  transform: translateX(300px) rotate(10deg) scale(0.8);
+  opacity: 0;
+}
+
+.feature-visible {
+  opacity: 1;
+  transform: translateX(0) rotate(0deg) scale(1);
+  transition: opacity 1s ease-out, transform 1s cubic-bezier(0.17, 0.67, 0.44, 1.05);
+  /* Smooth landing */
+}
+
+/* Arrow bounce animations */
+@keyframes arrowBounceRight {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes arrowBounceLeft {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+.arrow-bounce-right {
+  animation: arrowBounceRight 1.5s ease-in-out infinite;
+}
+
+.arrow-bounce-left {
+  animation: arrowBounceLeft 1.5s ease-in-out infinite;
+}
+
+/* Floating emoji */
+@keyframes emojiFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(10deg);
+  }
+}
+
+.emoji-float {
+  animation: emojiFloat 3s ease-in-out infinite;
+}
+
+/* Icon pulse animation */
+@keyframes iconPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.3;
+  }
+}
+
+.icon-pulse {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+/* =============================================================================
+   PARTICLE ANIMATIONS (replaces framer-motion particles)
+   ============================================================================= */
+
+@keyframes particleFlyRight {
+  0% {
+    transform: translateX(-20px) translateY(0) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    transform: translateX(50px) translateY(-30px) scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(200px) translateY(-100px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes particleFlyLeft {
+  0% {
+    transform: translateX(20px) translateY(0) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    transform: translateX(-50px) translateY(-30px) scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-200px) translateY(-100px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.particle-fly-right {
+  animation: particleFlyRight 1.5s ease-out forwards;
+}
+
+.particle-fly-left {
+  animation: particleFlyLeft 1.5s ease-out forwards;
+}
+
+/* =============================================================================
+   HOW IT WORKS ANIMATIONS
+   ============================================================================= */
+
+@keyframes stepWave {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.step-wave {
+  animation: stepWave 3s ease-in-out infinite;
+}
+
+@keyframes emojiBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.emoji-bounce {
+  animation: emojiBounce 2s ease-in-out infinite;
+}

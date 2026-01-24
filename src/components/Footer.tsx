@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Instagram } from 'lucide-react';
 import { JogarAgoraButton } from './shared/ParticleEffects';
 
@@ -12,12 +11,7 @@ const FinalCTA = () => (
         aria-labelledby="final-cta-heading"
     >
         <div className="max-w-4xl mx-auto px-4 text-center">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-            >
+            <div className="fade-in-up">
                 <span className="text-5xl sm:text-6xl mb-4 sm:mb-6 block" role="img" aria-label="game controller">🎮</span>
                 <h2
                     id="final-cta-heading"
@@ -32,7 +26,7 @@ const FinalCTA = () => (
                     Entre no Hyperama. IA analisa os participantes, você joga, e o ranking decide quem é o expert do BBB.
                 </p>
                 <JogarAgoraButton size="large" />
-            </motion.div>
+            </div>
         </div>
     </section>
 );
@@ -67,16 +61,15 @@ const Footer = () => {
                         {/* Social Links */}
                         <nav aria-label="Redes sociais">
                             <div className="flex items-center gap-6">
-                                <motion.a
+                                <a
                                     href="https://www.instagram.com/hyperama.app?igsh=eDl3NDY5cHptMTUw"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    whileHover={{ scale: 1.2, rotate: 5 }}
-                                    className="text-gray-400 hover:text-pink-500 transition-colors"
+                                    className="text-gray-400 hover:text-pink-500 hover:scale-110 hover:rotate-6 transition-all duration-200"
                                     aria-label="Siga-nos no Instagram"
                                 >
                                     <Instagram size={28} aria-hidden="true" />
-                                </motion.a>
+                                </a>
                             </div>
                         </nav>
                     </div>
@@ -87,3 +80,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
