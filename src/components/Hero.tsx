@@ -253,7 +253,7 @@ const Hero = () => {
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in-up delay-300">
                         <a
-                            href="https://play.google.com/store/apps/details?id=com.hyperama"
+                            href="https://app.hyperama.app"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
