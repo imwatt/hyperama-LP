@@ -1,351 +1,272 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import { Zap, Sparkles, Flame } from 'lucide-react';
-import { JogarAgoraButton } from './shared/ParticleEffects';
 
 // =============================================================================
-// SCROLL FIRE PARTICLE
+// HYPE TOAST COMPONENT - Shows when scroll triggers hype peak
 // =============================================================================
 
-interface BigFireParticleProps {
-    delay: number;
-    x: number;
-    size: number;
-}
+const HypeToast = ({ show }: { show: boolean }) => {
+    if (!show) return null;
 
-/**
- * Large fire particle for scroll-triggered effect
- */
-const BigFireParticle = ({ delay, x, size }: BigFireParticleProps) => (
-    <motion.div
-        className="absolute bottom-0 bg-gradient-to-t from-orange-500 via-yellow-400 to-yellow-200 rounded-full"
-        style={{
-            left: `${x}%`,
-            width: size,
-            height: size,
-            filter: 'blur(2px)'
-        }}
-        initial={{ y: 0, opacity: 0 }}
-        animate={{
-            y: [0, -window.innerHeight * 0.8],
-            opacity: [0, 0.9, 0.9, 0.5, 0]
-        }}
-        transition={{
-            duration: 2.5,
-            delay,
-            ease: 'easeOut',
-            times: [0, 0.1, 0.5, 0.8, 1]
-        }}
-        aria-hidden="true"
-    />
-);
-
-// =============================================================================
-// FLOATING EMOJIS
-// =============================================================================
-
-const FLOATING_EMOJIS = ['🔥', '⚡', '🏆', '🤖', '🎮', '📊'];
-
-const FloatingEmojis = () => (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {FLOATING_EMOJIS.map((emoji, i) => (
-            <motion.div
-                key={i}
-                className="absolute text-4xl"
-                initial={{ opacity: 0.15 }}
-                animate={{
-                    y: [0, -30, 0],
-                    rotate: [0, 10, -10, 0]
-                }}
-                transition={{
-                    duration: 4 + i * 0.5,
-                    repeat: Infinity,
-                    delay: i * 0.3
-                }}
-                style={{
-                    left: `${10 + i * 15}%`,
-                    top: `${20 + (i % 3) * 25}%`
-                }}
-            >
-                {emoji}
-            </motion.div>
-        ))}
-    </div>
-);
-
-// =============================================================================
-// HERO CARD COMPONENT
-// =============================================================================
-
-interface HeroCardProps {
-    showHypeEffect: boolean;
-    buttonScale: any;
-}
-
-const HeroCard = ({ showHypeEffect, buttonScale }: HeroCardProps) => (
-    <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.6, type: "spring" }}
-        className="relative z-10 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 shadow-2xl"
-    >
-        {/* Glass reflection */}
-        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent rounded-t-[2rem] pointer-events-none" />
-
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 ring-2 ring-white/10 flex items-center justify-center text-xl">
-                <span role="img" aria-label="fire">🔥</span>
-            </div>
-            <div className="flex-1">
-                <div className="text-white font-bold">Participante BBB 26</div>
-                <div className="text-gray-400 text-sm flex items-center gap-1">
-                    <Zap size={12} className="text-yellow-400" aria-hidden="true" />
-                    IA detectou: Alta repercussão
-                </div>
-            </div>
-            <div className="px-2 py-1 bg-green-500/20 text-green-400 rounded-lg text-xs font-bold border border-green-500/30">
-                🔥 HOT
-            </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-            <motion.div style={{ scale: buttonScale }} className="relative">
-                <motion.button
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`w-full bg-gradient-to-br from-yellow-500 to-orange-600 p-4 rounded-xl flex flex-col items-center shadow-lg transition-shadow ${showHypeEffect ? 'shadow-[0_0_40px_rgba(251,191,36,0.6)]' : 'shadow-orange-500/30'}`}
-                    aria-label="Hypar - Apostar que vai bombar"
-                >
-                    <motion.span
-                        className="text-2xl mb-1"
-                        animate={showHypeEffect ? { rotate: [-5, 5, -5], scale: [1, 1.2, 1] } : {}}
-                        transition={{ duration: 0.3, repeat: showHypeEffect ? Infinity : 0 }}
-                        role="img"
-                        aria-label="fire"
-                    >
-                        🔥
-                    </motion.span>
-                    <span className="text-white font-black">HYPAR</span>
-                    <span className="text-white/70 text-xs">Vai bombar!</span>
-                </motion.button>
-
-                {showHypeEffect && (
-                    <motion.div
-                        className="absolute inset-0 border-2 border-yellow-400/50 rounded-xl pointer-events-none"
-                        initial={{ scale: 1, opacity: 0.5 }}
-                        animate={{ scale: 1.2, opacity: 0 }}
-                        transition={{ duration: 0.8, repeat: Infinity }}
-                        aria-hidden="true"
-                    />
-                )}
-            </motion.div>
-
-            <motion.button
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-gradient-to-br from-purple-600 to-violet-700 p-4 rounded-xl flex flex-col items-center shadow-lg shadow-purple-500/30"
-                aria-label="ZiKAR - Apostar que vai furar"
-            >
-                <span className="text-2xl mb-1" role="img" aria-label="skull">💀</span>
-                <span className="text-white font-black">ZiKAR</span>
-                <span className="text-white/70 text-xs">Vai furar!</span>
-            </motion.button>
-        </div>
-
-        {/* AI Analysis */}
-        <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-lg">
-                <span role="img" aria-label="robot">🤖</span>
-            </div>
-            <div className="flex-1">
-                <div className="text-white/70 text-xs">Análise IA</div>
-                <div className="text-white text-sm font-medium">Em Alta 📈 78% positivo</div>
-            </div>
-        </div>
-
-        {/* Scroll hint */}
-        <motion.div
-            className="mt-4 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-        >
-            <motion.div
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-gray-500 text-xs flex items-center justify-center gap-1"
-            >
-                <span aria-hidden="true">↓</span>
-                <span>Role para ver a mágica</span>
-            </motion.div>
-        </motion.div>
-    </motion.div>
-);
-
-// =============================================================================
-// HYPE TOAST COMPONENT
-// =============================================================================
-
-const HypeToast = () => (
-    <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 50 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: -20 }}
-        transition={{ duration: 0.4 }}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] pointer-events-none"
-        role="alert"
-        aria-live="polite"
-    >
-        <motion.div
-            className="bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 rounded-3xl p-6 shadow-[0_0_60px_rgba(251,191,36,0.5)]"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 0.5, repeat: Infinity }}
-        >
-            <div className="flex items-center gap-3">
-                <motion.div
-                    className="w-14 h-14 bg-black/20 rounded-full flex items-center justify-center"
-                    animate={{ rotate: [-5, 5, -5] }}
-                    transition={{ duration: 0.3, repeat: Infinity }}
-                >
-                    <Flame className="w-8 h-8 text-white" aria-hidden="true" />
-                </motion.div>
-                <div>
-                    <div className="text-2xl font-black text-white">HYPADO! 🔥</div>
-                    <div className="text-white/80 text-sm flex items-center gap-1">
-                        <Zap size={14} aria-hidden="true" />
-                        <span>-10 energia</span>
+    return (
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] pointer-events-none hype-toast-animate">
+            <div className="bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 rounded-3xl p-6 shadow-[0_0_60px_rgba(251,191,36,0.5)] pulse-scale">
+                <div className="flex items-center gap-3">
+                    <div className="w-14 h-14 bg-black/20 rounded-full flex items-center justify-center shake-rotate">
+                        <Flame className="w-8 h-8 text-white" aria-hidden="true" />
+                    </div>
+                    <div>
+                        <div className="text-2xl font-black text-white">HYPADO! 🔥</div>
+                        <div className="text-white/80 text-sm flex items-center gap-1">
+                            <Zap size={14} aria-hidden="true" />
+                            <span>-10 energia</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </motion.div>
-    </motion.div>
-);
+        </div>
+    );
+};
+
+// =============================================================================
+// HERO CARD COMPONENT - With progressive button scale
+// =============================================================================
+
+interface HeroCardProps {
+    hypeProgress: number; // 0 to 1, controls button expansion
+    showHypePeak: boolean; // true at peak for toast
+}
+
+const HeroCard = ({ hypeProgress, showHypePeak }: HeroCardProps) => {
+    // Button scale: starts at 1, grows to 1.3 at peak
+    const buttonScale = 1 + (hypeProgress * 0.3);
+    // Glow intensity: 0 to 60px blur
+    const glowIntensity = Math.floor(hypeProgress * 60);
+    // Emoji rotation based on progress
+    const emojiRotation = hypeProgress * 15;
+
+    return (
+        <div className={`relative z-10 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 shadow-2xl hero-card-animate ${showHypePeak ? 'hype-active' : ''}`}>
+            {/* Glass reflection */}
+            <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent rounded-t-[2rem] pointer-events-none" />
+
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 ring-2 ring-white/10 flex items-center justify-center text-xl">
+                    <span role="img" aria-label="fire">🔥</span>
+                </div>
+                <div className="flex-1">
+                    <div className="text-white font-bold">Participante BBB 26</div>
+                    <div className="text-gray-400 text-sm flex items-center gap-1">
+                        <Zap size={12} className="text-yellow-400" aria-hidden="true" />
+                        IA detectou: Alta repercussão
+                    </div>
+                </div>
+                <div className="px-2 py-1 bg-green-500/20 text-green-400 rounded-lg text-xs font-bold border border-green-500/30">
+                    🔥 HOT
+                </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="relative">
+                    {/* HYPAR Button with progressive scale */}
+                    <button
+                        className="w-full bg-gradient-to-br from-yellow-500 to-orange-600 p-4 rounded-xl flex flex-col items-center transition-shadow"
+                        style={{
+                            transform: `scale(${buttonScale})`,
+                            boxShadow: hypeProgress > 0
+                                ? `0 0 ${glowIntensity}px rgba(251, 191, 36, ${0.3 + hypeProgress * 0.4})`
+                                : '0 4px 14px rgba(234, 88, 12, 0.3)',
+                            zIndex: hypeProgress > 0.1 ? 10 : 1
+                        }}
+                        aria-label="Hypar - Apostar que vai bombar"
+                    >
+                        <span
+                            className="text-2xl mb-1"
+                            style={{ transform: `rotate(${emojiRotation}deg) scale(${1 + hypeProgress * 0.3})` }}
+                            role="img"
+                            aria-label="fire"
+                        >
+                            🔥
+                        </span>
+                        <span className="text-white font-black">HYPAR</span>
+                        <span className="text-white/70 text-xs">Vai bombar!</span>
+                    </button>
+
+                    {/* Pulse ring at peak */}
+                    {showHypePeak && (
+                        <div className="absolute inset-0 border-2 border-yellow-400/50 rounded-xl pointer-events-none pulse-ring" style={{ transform: `scale(${buttonScale})` }} />
+                    )}
+                </div>
+
+                <button
+                    className="bg-gradient-to-br from-purple-600 to-violet-700 p-4 rounded-xl flex flex-col items-center shadow-lg shadow-purple-500/30 hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.98] transition-transform"
+                    aria-label="ZiKAR - Apostar que vai furar"
+                >
+                    <span className="text-2xl mb-1" role="img" aria-label="skull">💀</span>
+                    <span className="text-white font-black">ZiKAR</span>
+                    <span className="text-white/70 text-xs">Vai furar!</span>
+                </button>
+            </div>
+
+            {/* AI Analysis */}
+            <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-lg">
+                    <span role="img" aria-label="robot">🤖</span>
+                </div>
+                <div className="flex-1">
+                    <div className="text-white/70 text-xs">Análise IA</div>
+                    <div className="text-white text-sm font-medium">Em Alta 📈 78% positivo</div>
+                </div>
+            </div>
+
+            {/* Scroll hint - fades out as hype builds */}
+            <div className="mt-4 text-center fade-in-delayed" style={{ opacity: 1 - hypeProgress }}>
+                <div className="text-gray-500 text-xs flex items-center justify-center gap-1 bounce-subtle">
+                    <span aria-hidden="true">↓</span>
+                    <span>Role para ver a mágica</span>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 // =============================================================================
 // MAIN HERO COMPONENT
 // =============================================================================
 
 const Hero = () => {
-    const targetRef = useRef<HTMLDivElement>(null);
-    const [showHypeEffect, setShowHypeEffect] = useState(false);
-    const [bigParticles, setBigParticles] = useState<Array<{ id: number; x: number; delay: number; size: number }>>([]);
+    const heroRef = useRef<HTMLDivElement>(null);
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [showHypePeak, setShowHypePeak] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
 
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ["start start", "end start"]
-    });
+    // Check if desktop (lg breakpoint = 1024px)
+    useEffect(() => {
+        const checkIsDesktop = () => {
+            setIsDesktop(window.innerWidth >= 1024);
+        };
+        checkIsDesktop();
+        window.addEventListener('resize', checkIsDesktop);
+        return () => window.removeEventListener('resize', checkIsDesktop);
+    }, []);
 
-    const yText = useTransform(scrollYProgress, [0, 1], [0, 300]);
-    const yVisual = useTransform(scrollYProgress, [0, 1], [0, -180]);
-    const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-    const cardRotate = useTransform(scrollYProgress, [0, 0.3], [0, 5]);
-    const buttonScale = useTransform(scrollYProgress, [0.1, 0.2, 0.25], [1, 1.2, 1]);
-
-    const smoothYText = useSpring(yText, { stiffness: 100, damping: 30 });
-    const smoothYVisual = useSpring(yVisual, { stiffness: 100, damping: 30 });
-
-    // Trigger HYPE effect on scroll
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        if (latest > 0.1 && latest < 0.4 && !showHypeEffect) {
-            setShowHypeEffect(true);
-            setBigParticles(Array.from({ length: 40 }, (_, i) => ({
-                id: i,
-                x: Math.random() * 100,
-                delay: Math.random() * 1.5,
-                size: 12 + Math.random() * 30
-            })));
-        } else if (latest <= 0.08 || latest >= 0.45) {
-            setShowHypeEffect(false);
+    // Optimized scroll detection - ONLY on desktop for performance
+    useEffect(() => {
+        // Skip scroll effects entirely on mobile for performance
+        if (!isDesktop) {
+            setScrollProgress(0);
+            setShowHypePeak(false);
+            return;
         }
-    });
+
+        const heroElement = heroRef.current;
+        if (!heroElement) return;
+
+        const handleScroll = () => {
+            const rect = heroElement.getBoundingClientRect();
+            const heroHeight = heroElement.offsetHeight;
+
+            // Calculate scroll progress (0 to 1) based on how much of hero has scrolled
+            // Using 0.9 multiplier to make progress slower (more scroll needed to reach 100%)
+            const scrolled = -rect.top;
+            const progress = Math.max(0, Math.min(1, scrolled / (heroHeight * 0.9)));
+            setScrollProgress(progress);
+
+            // Show peak effect (toast) when reaching 25-70% scroll (much longer visible time)
+            if (progress > 0.25 && progress < 0.70) {
+                setShowHypePeak(true);
+            } else {
+                setShowHypePeak(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isDesktop]);
+
+    // Calculate hype progress (0-1): starts at 10% scroll, peaks at 40%
+    // On mobile: always 0 (no effects)
+    const hypeProgress = isDesktop ? (scrollProgress < 0.1 ? 0 : Math.min(1, (scrollProgress - 0.1) / 0.3)) : 0;
+
+    // Parallax values - disabled on mobile (always 0)
+    const textY = isDesktop ? scrollProgress * 150 : 0;
+    const cardY = isDesktop ? scrollProgress * -90 : 0;
+    const opacity = isDesktop ? Math.max(0, 1 - scrollProgress * 1.5) : 1;
 
     return (
         <section
-            ref={targetRef}
+            ref={heroRef}
             className="relative min-h-[100vh] lg:min-h-[130vh] flex items-center justify-center overflow-hidden z-10 pt-20 sm:pt-32 pb-12 sm:pb-24 px-4"
             aria-label="Hero section"
         >
-            <FloatingEmojis />
+            {/* Decorative glows - color shifts with hype progress */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+                <div
+                    className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full blur-3xl float-slow transition-all duration-300"
+                    style={{
+                        backgroundColor: `rgba(${168 + hypeProgress * 87}, ${85 - hypeProgress * 30}, ${247 - hypeProgress * 147}, 0.2)`,
+                        transform: `scale(${1 + hypeProgress * 0.25})`
+                    }}
+                />
+                <div
+                    className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full blur-3xl float-slow-delayed transition-all duration-300"
+                    style={{
+                        backgroundColor: `rgba(${236 + hypeProgress * 19}, ${72 + hypeProgress * 119}, ${153 - hypeProgress * 117}, 0.2)`,
+                        transform: `scale(${1 + hypeProgress * 0.25})`
+                    }}
+                />
+            </div>
 
-            {/* Big Fire Particles on scroll */}
-            <AnimatePresence>
-                {showHypeEffect && (
-                    <motion.div
-                        className="fixed inset-0 pointer-events-none z-50 overflow-hidden"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        aria-hidden="true"
-                    >
-                        {bigParticles.map((p) => (
-                            <BigFireParticle key={p.id} x={p.x} delay={p.delay} size={p.size} />
-                        ))}
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <motion.div
+            <div
+                className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full transition-opacity duration-300"
                 style={{ opacity }}
-                className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full"
             >
-                {/* Left Side - Text Content */}
-                <motion.div
-                    style={{ y: smoothYText }}
+                {/* Left Side - Text Content with parallax */}
+                <div
                     className="text-center lg:text-left z-20 pt-8 sm:pt-20"
+                    style={{ transform: `translateY(${textY}px)` }}
                 >
                     {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-8 backdrop-blur-md"
-                    >
-                        <motion.span
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="flex h-2 w-2 rounded-full bg-green-500"
-                            aria-hidden="true"
-                        />
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-8 backdrop-blur-md fade-in-up">
+                        <span className="flex h-2 w-2 rounded-full bg-green-500 pulse-dot" aria-hidden="true" />
                         <span className="text-sm font-bold text-white tracking-wide flex items-center gap-1">
                             <Sparkles size={14} className="text-yellow-400" aria-hidden="true" />
                             BBB 26 • POWERED BY AI
                         </span>
-                    </motion.div>
+                    </div>
 
                     {/* Title */}
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 sm:mb-8 leading-[0.9]"
-                    >
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 sm:mb-8 leading-[0.9] fade-in-up delay-100">
                         <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-x">
                             HYPERAMA
                         </span>
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-10 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed px-2 sm:px-0"
-                    >
+                    <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-10 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed px-2 sm:px-0 fade-in-up delay-200">
                         O <span className="text-purple-400 font-semibold">jogo do BBB 26</span>.
                         IA analisa os participantes. Você faz sua jogada.
                         <span className="text-pink-400 font-semibold"> Domine o ranking!</span>
-                    </motion.p>
+                    </p>
 
                     {/* CTA Buttons */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.5 }}
-                        className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-                    >
-                        <JogarAgoraButton size="large" />
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in-up delay-300">
+                        <a
+                            href="https://play.google.com/store/apps/details?id=com.hyperama"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            style={{
+                                boxShadow: showHypePeak
+                                    ? '0 0 30px rgba(168,85,247,0.5)'
+                                    : '0 4px 14px rgba(168, 85, 247, 0.3)',
+                                transform: showHypePeak ? 'scale(1.05)' : 'scale(1)'
+                            }}
+                        >
+                            <span>🔥</span>
+                            <span>Jogar Agora</span>
+                        </a>
 
                         <a
                             href="#gameplay"
@@ -353,48 +274,40 @@ const Hero = () => {
                         >
                             Como Funciona
                         </a>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
 
-                {/* Right Side - Card */}
-                <motion.div
-                    style={{ y: smoothYVisual, rotate: cardRotate }}
-                    className="relative z-10 hidden lg:block"
+                {/* Right Side - Card with parallax and progressive button */}
+                <div
+                    className="relative z-10 hidden lg:block fade-in-scale delay-400"
+                    style={{ transform: `translateY(${cardY}px) rotate(${scrollProgress * 5}deg)` }}
                 >
-                    <HeroCard showHypeEffect={showHypeEffect} buttonScale={buttonScale} />
+                    <HeroCard hypeProgress={hypeProgress} showHypePeak={showHypePeak} />
 
-                    {/* Background Glows */}
-                    <motion.div
-                        animate={{
-                            y: [0, -20, 0],
-                            scale: showHypeEffect ? [1, 1.3, 1] : 1,
-                            opacity: showHypeEffect ? [0.4, 0.7, 0.4] : 0.4
+                    {/* Background Glows - intensity based on hype progress */}
+                    <div
+                        className="absolute -top-8 -right-8 w-32 h-32 rounded-2xl blur-xl float-slow transition-all duration-300"
+                        style={{
+                            backgroundColor: `rgba(${168 + hypeProgress * 87}, ${85 + hypeProgress * 106}, ${247 - hypeProgress * 211}, 0.4)`,
+                            transform: `scale(${1 + hypeProgress * 0.3})`
                         }}
-                        transition={{ duration: showHypeEffect ? 0.5 : 6, repeat: Infinity }}
-                        className="absolute -top-8 -right-8 w-32 h-32 bg-purple-500/40 rounded-2xl blur-xl"
                         aria-hidden="true"
                     />
-                    <motion.div
-                        animate={{
-                            y: [0, 20, 0],
-                            scale: showHypeEffect ? [1, 1.4, 1] : 1
+                    <div
+                        className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full blur-xl float-slow-delayed transition-all duration-300"
+                        style={{
+                            backgroundColor: `rgba(${236 + hypeProgress * 19}, ${72 + hypeProgress * 119}, ${153 - hypeProgress * 117}, 0.3)`,
+                            transform: `scale(${1 + hypeProgress * 0.4})`
                         }}
-                        transition={{ duration: showHypeEffect ? 0.5 : 8, repeat: Infinity, delay: 1 }}
-                        className={`absolute -bottom-8 -left-8 w-40 h-40 rounded-full blur-xl transition-colors duration-500 ${showHypeEffect ? 'bg-orange-500/50' : 'bg-pink-500/30'}`}
                         aria-hidden="true"
                     />
-                </motion.div>
-            </motion.div>
+                </div>
+            </div>
 
-            {/* HYPE Toast */}
-            <AnimatePresence>
-                {showHypeEffect && <HypeToast />}
-            </AnimatePresence>
+            {/* HYPE Toast - Shows at peak */}
+            <HypeToast show={showHypePeak} />
         </section>
     );
 };
 
 export default Hero;
-
-// Re-export for backwards compatibility
-export { JogarAgoraButton };

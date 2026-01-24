@@ -74,3 +74,290 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* =============================================================================
+   LIGHTWEIGHT CSS ANIMATIONS (replaces heavy Framer Motion)
+   ============================================================================= */
+
+/* Fade in with upward movement */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+/* Fade in with scale */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in-scale {
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+/* Hero card animation */
+.hero-card-animate {
+  animation: fadeInScale 1s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+/* Delayed fade in */
+.fade-in-delayed {
+  animation: fadeInUp 0.5s ease-out 2s forwards;
+  opacity: 0;
+}
+
+/* Floating effect - lightweight */
+@keyframes floatSlow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.float-slow-delayed {
+  animation: floatSlow 8s ease-in-out 1s infinite;
+}
+
+/* Pulsing dot */
+@keyframes pulseDot {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+/* Subtle bounce */
+@keyframes bounceSubtle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.bounce-subtle {
+  animation: bounceSubtle 1.5s ease-in-out infinite;
+}
+
+/* =============================================================================
+   BACKGROUND ORBS - Very slow, lightweight CSS animations
+   ============================================================================= */
+
+@keyframes orbAnimate1 {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.3) rotate(180deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes orbAnimate2 {
+
+  0%,
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateX(150px) scale(1.5);
+    opacity: 0.6;
+  }
+}
+
+@keyframes orbAnimate3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(100px, -300px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes orbAnimate4 {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.4;
+  }
+}
+
+.orb-animate-1 {
+  animation: orbAnimate1 25s ease-in-out infinite;
+}
+
+.orb-animate-2 {
+  animation: orbAnimate2 30s ease-in-out 2s infinite;
+}
+
+.orb-animate-3 {
+  animation: orbAnimate3 35s ease-in-out 5s infinite;
+}
+
+.orb-animate-4 {
+  animation: orbAnimate4 20s ease-in-out 10s infinite;
+}
+
+/* =============================================================================
+   HYPE EFFECTS - Triggered on scroll
+   ============================================================================= */
+
+/* Shake and rotate animation for emoji/icons */
+@keyframes shakeRotate {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+
+  50% {
+    transform: rotate(5deg) scale(1.2);
+  }
+
+  75% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+}
+
+.shake-rotate {
+  animation: shakeRotate 0.3s ease-in-out infinite;
+}
+
+/* Pulsing scale for toast */
+@keyframes pulseScale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.pulse-scale {
+  animation: pulseScale 0.5s ease-in-out infinite;
+}
+
+/* Ring pulse animation */
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulseRing 0.8s ease-out infinite;
+}
+
+/* Toast entrance animation */
+@keyframes toastEnter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.hype-toast-animate {
+  animation: toastEnter 0.4s ease-out forwards;
+}
+
+/* Card active state when hype is triggered */
+.hype-active {
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+  transition: box-shadow 0.3s ease;
+}

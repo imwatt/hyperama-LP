@@ -1,4 +1,6 @@
-import { motion } from 'framer-motion';
+// =============================================================================
+// BACKGROUND COMPONENT - Pure CSS, no JS animations
+// =============================================================================
 
 const Background = () => {
     return (
@@ -6,46 +8,11 @@ const Background = () => {
             {/* Deep Space Background with subtle gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#0a0015] via-[#050505] to-[#0a0510]" />
 
-            {/* Animated Orbs - More vibrant */}
-            <motion.div
-                animate={{
-                    scale: [1, 1.3, 1],
-                    rotate: [0, 180, 360],
-                    opacity: [0.5, 0.7, 0.5]
-                }}
-                transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[-30%] left-[-20%] w-[1200px] h-[1200px] bg-purple-500/40 rounded-full blur-[180px]"
-            />
-
-            <motion.div
-                animate={{
-                    scale: [1, 1.5, 1],
-                    x: [0, 150, 0],
-                    opacity: [0.4, 0.6, 0.4]
-                }}
-                transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                className="absolute bottom-[-30%] right-[-20%] w-[1000px] h-[1000px] bg-pink-500/35 rounded-full blur-[150px]"
-            />
-
-            <motion.div
-                animate={{
-                    y: [0, -300, 0],
-                    x: [0, 100, 0],
-                    opacity: [0.3, 0.5, 0.3]
-                }}
-                transition={{ duration: 35, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-                className="absolute top-[30%] left-[40%] w-[800px] h-[800px] bg-indigo-500/25 rounded-full blur-[120px]"
-            />
-
-            {/* Additional accent orb */}
-            <motion.div
-                animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.2, 0.4, 0.2]
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 10 }}
-                className="absolute top-[60%] right-[20%] w-[400px] h-[400px] bg-fuchsia-500/20 rounded-full blur-[100px]"
-            />
+            {/* Animated Orbs - CSS only, no JS */}
+            <div className="absolute top-[-30%] left-[-20%] w-[1200px] h-[1200px] bg-purple-500/40 rounded-full blur-[180px] orb-animate-1" />
+            <div className="absolute bottom-[-30%] right-[-20%] w-[1000px] h-[1000px] bg-pink-500/35 rounded-full blur-[150px] orb-animate-2" />
+            <div className="absolute top-[30%] left-[40%] w-[800px] h-[800px] bg-indigo-500/25 rounded-full blur-[120px] orb-animate-3" />
+            <div className="absolute top-[60%] right-[20%] w-[400px] h-[400px] bg-fuchsia-500/20 rounded-full blur-[100px] orb-animate-4" />
 
             {/* Noise/Grain overlay for texture */}
             <div
