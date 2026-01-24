@@ -82,6 +82,7 @@ const HowItWorks = () => {
                                 data-index={index}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
+                                onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
                                 className={`
                                     step-card relative bg-gradient-to-br from-gray-900/90 to-black/90 
                                     backdrop-blur-sm border p-5 sm:p-8 rounded-3xl text-center cursor-pointer

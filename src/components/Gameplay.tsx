@@ -193,17 +193,48 @@ const PhoneMockup = ({ activeScreen }: PhoneMockupProps) => (
 );
 
 // ============================================================================
-// MOBILE VERSION - Tab-based
+// MOBILE VERSION - Tab-based with labels and swipe gesture
 // ============================================================================
 
 const GameplayMobile = () => {
     const [activeScreen, setActiveScreen] = useState(0);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    // Minimum swipe distance (in px)
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe && activeScreen < screens.length - 1) {
+            setActiveScreen(prev => prev + 1);
+        }
+        if (isRightSwipe && activeScreen > 0) {
+            setActiveScreen(prev => prev - 1);
+        }
+    };
+
+    // Short labels for tabs
+    const tabLabels = ['Feed', 'Apostar', 'Ranking'];
 
     return (
         <section id="gameplay" className="relative z-10 bg-black py-16 overflow-hidden">
             <div className="max-w-4xl mx-auto px-4">
                 {/* Section Header */}
-                <div className="text-center mb-8 fade-in-up">
+                <div className="text-center mb-6 fade-in-up">
                     <span className="inline-block px-4 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-sm font-bold mb-4">
                         📱 GAMEPLAY
                     </span>
@@ -212,28 +243,61 @@ const GameplayMobile = () => {
                     </h2>
                 </div>
 
-                {/* Tab Buttons */}
-                <div className="flex gap-2 mb-6 justify-center">
+                {/* Tab Buttons with Labels */}
+                <div className="flex gap-2 mb-4 justify-center">
                     {screens.map((screen, idx) => (
                         <button
                             key={idx}
                             onClick={() => setActiveScreen(idx)}
-                            className={`px-4 py-2 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 ${idx === activeScreen
-                                ? `bg-gradient-to-r ${screen.color} text-white shadow-lg`
+                            className={`px-3 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 flex flex-col items-center gap-1 min-w-[70px] ${idx === activeScreen
+                                ? `bg-gradient-to-r ${screen.color} text-white shadow-lg shadow-purple-500/20`
                                 : 'bg-white/10 text-white/60'
                                 }`}
                         >
-                            {screen.icon}
+                            <span className="text-lg">{screen.icon}</span>
+                            <span>{tabLabels[idx]}</span>
                         </button>
                     ))}
                 </div>
 
-                {/* Phone Mockup */}
-                <div className="flex justify-center mb-6">
-                    <div className="relative scale-[0.9]">
+                {/* Phone Mockup with Navigation Arrows */}
+                <div
+                    className="flex justify-center items-center mb-6 gap-2 sm:gap-4"
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
+                    {/* Left Arrow */}
+                    <button
+                        onClick={() => activeScreen > 0 && setActiveScreen(prev => prev - 1)}
+                        className={`text-4xl sm:text-5xl transition-all duration-300 p-2 ${activeScreen > 0
+                                ? 'text-purple-400 hover:text-purple-300 hover:scale-110 active:scale-95 arrow-bounce-left'
+                                : 'text-gray-700 cursor-not-allowed'
+                            }`}
+                        disabled={activeScreen === 0}
+                        aria-label="Tela anterior"
+                    >
+                        ‹
+                    </button>
+
+                    {/* Phone Mockup */}
+                    <div className="relative scale-[0.70] sm:scale-[0.80] md:scale-[0.85]">
                         <PhoneMockup activeScreen={activeScreen} />
                         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[400px] bg-gradient-to-tr ${screens[activeScreen].color} opacity-30 blur-[80px] -z-10 transition-all duration-700`} />
                     </div>
+
+                    {/* Right Arrow */}
+                    <button
+                        onClick={() => activeScreen < screens.length - 1 && setActiveScreen(prev => prev + 1)}
+                        className={`text-4xl sm:text-5xl transition-all duration-300 p-2 ${activeScreen < screens.length - 1
+                                ? 'text-purple-400 hover:text-purple-300 hover:scale-110 active:scale-95 arrow-bounce-right'
+                                : 'text-gray-700 cursor-not-allowed'
+                            }`}
+                        disabled={activeScreen === screens.length - 1}
+                        aria-label="Próxima tela"
+                    >
+                        ›
+                    </button>
                 </div>
 
                 {/* Content */}
@@ -252,6 +316,7 @@ const GameplayMobile = () => {
                         <button
                             key={idx}
                             onClick={() => setActiveScreen(idx)}
+                            aria-label={`Ir para ${tabLabels[idx]}`}
                             className={`h-3 rounded-full bg-gradient-to-r ${screen.color} transition-all duration-300 ${idx === activeScreen ? 'w-10 opacity-100' : 'w-3 opacity-30'}`}
                         />
                     ))}

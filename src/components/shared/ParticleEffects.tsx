@@ -97,8 +97,11 @@ export const JogarAgoraButton = ({
     const [particles, setParticles] = useState<Particle[]>([]);
 
     const handleMouseEnter = () => {
-        setIsHovered(true);
-        setParticles(generateParticles(20));
+        // Only generate particles on devices with hover capability
+        if (window.matchMedia('(hover: hover)').matches) {
+            setIsHovered(true);
+            setParticles(generateParticles(20));
+        }
     };
 
     const handleMouseLeave = () => {

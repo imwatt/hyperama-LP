@@ -30,7 +30,8 @@ const Header = () => {
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-gray-300 hover:text-white p-2"
+                            className="text-gray-300 hover:text-white p-3 -m-1 min-w-[48px] min-h-[48px] flex items-center justify-center"
+                            aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
                         >
                             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -42,11 +43,23 @@ const Header = () => {
             {isMenuOpen && (
                 <div className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        <a href="#features" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Como funciona</a>
-                        <a href="#gameplay" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gameplay</a>
+                        <a
+                            href="#features"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="text-gray-300 hover:text-white block px-3 py-3 rounded-md text-base font-medium min-h-[48px] flex items-center"
+                        >
+                            Como funciona
+                        </a>
+                        <a
+                            href="#gameplay"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="text-gray-300 hover:text-white block px-3 py-3 rounded-md text-base font-medium min-h-[48px] flex items-center"
+                        >
+                            Gameplay
+                        </a>
                         <a
                             href="https://app.hyperama.app"
-                            className="mt-4 w-full block text-center bg-purple-600 text-white px-4 py-3 rounded-xl font-bold"
+                            className="mt-4 w-full block text-center bg-purple-600 text-white px-4 py-4 rounded-xl font-bold min-h-[48px]"
                         >
                             Jogar Agora
                         </a>

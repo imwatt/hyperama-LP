@@ -198,7 +198,7 @@ const Hero = () => {
     return (
         <section
             ref={heroRef}
-            className="relative min-h-[100vh] lg:min-h-[130vh] flex items-center justify-center overflow-hidden z-10 pt-20 sm:pt-32 pb-12 sm:pb-24 px-4"
+            className="relative min-h-[100dvh] lg:min-h-[130vh] flex items-center justify-center overflow-hidden z-10 pt-20 sm:pt-32 pb-12 sm:pb-24 px-4"
             aria-label="Hero section"
         >
             {/* Decorative glows - color shifts with hype progress */}
@@ -220,7 +220,7 @@ const Hero = () => {
             </div>
 
             <div
-                className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full transition-opacity duration-300"
+                className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full transition-opacity duration-300"
                 style={{ opacity }}
             >
                 {/* Left Side - Text Content with parallax */}
@@ -238,7 +238,7 @@ const Hero = () => {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 sm:mb-8 leading-[0.9] fade-in-up delay-100">
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-8 leading-[0.9] fade-in-up delay-100">
                         <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-x">
                             HYPERAMA
                         </span>
@@ -256,7 +256,7 @@ const Hero = () => {
                             href="https://play.google.com/store/apps/details?id=com.hyperama"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] min-h-[48px]"
                             style={{
                                 boxShadow: showHypePeak
                                     ? '0 0 30px rgba(168,85,247,0.5)'
@@ -270,7 +270,7 @@ const Hero = () => {
 
                         <a
                             href="#gameplay"
-                            className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl font-bold text-lg transition-all border border-white/20 hover:border-white/40 backdrop-blur-md"
+                            className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl font-bold text-lg transition-all border border-white/20 hover:border-white/40 backdrop-blur-md min-h-[48px]"
                         >
                             Como Funciona
                         </a>

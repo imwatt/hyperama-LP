@@ -22,6 +22,22 @@ body {
   color: var(--color-foreground);
   background: var(--color-background);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* Safe area support for notch/Dynamic Island */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Touch optimization for interactive elements */
+button,
+a,
+[role="button"],
+input,
+select,
+textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Hiding scrollbar for cleaner look if needed */
@@ -537,4 +553,64 @@ body {
 
 .emoji-bounce {
   animation: emojiBounce 2s ease-in-out infinite;
+}
+
+/* =============================================================================
+   MOBILE OPTIMIZATIONS
+   ============================================================================= */
+
+/* Disable heavy animations on mobile for performance and battery */
+@media (max-width: 768px) {
+
+  .orb-animate-1,
+  .orb-animate-2,
+  .orb-animate-3,
+  .orb-animate-4,
+  .float-slow,
+  .float-slow-delayed,
+  .step-wave,
+  .emoji-float {
+    animation: none !important;
+  }
+
+  /* Reduce blur intensity on mobile */
+  .blur-3xl {
+    filter: blur(24px) !important;
+  }
+
+  .blur-xl {
+    filter: blur(12px) !important;
+  }
+
+  .backdrop-blur-xl {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* Fix translateX overflow on small screens */
+  .feature-slide-left.feature-hidden {
+    transform: translateX(-50px) scale(0.95) !important;
+  }
+
+  .feature-slide-right.feature-hidden {
+    transform: translateX(50px) scale(0.95) !important;
+  }
+}
+
+/* Touch device hover alternatives */
+@media (hover: none) {
+  .feature-card:active {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+  }
+
+  .step-card:active {
+    border-color: rgba(168, 85, 247, 0.7);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
+  }
 }
