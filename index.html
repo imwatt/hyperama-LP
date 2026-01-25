@@ -9,54 +9,7 @@
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', 'G-PWRZB4QLK9', {
-      'send_page_view': true,
-      'debug_mode': true
-    });
-
-    // --- Advanced Tracking ---
-
-    // 1. Global Click Tracking
-    document.addEventListener('click', function (e) {
-      // Find the closest clickable element (button, link, etc.) or just the target
-      const target = e.target.closest('a, button, .clickable') || e.target;
-
-      const eventParams = {
-        event_category: 'interaction',
-        event_label: target.innerText || target.ariaLabel || target.className || 'unknown_element',
-        element_tag: target.tagName,
-        element_id: target.id || '',
-        element_class: target.className || '',
-        page_path: window.location.pathname
-      };
-
-      // Ensure we don't track simple verification clicks on non-interactive elements if desired,
-      // but for "whole screen" we usually want everything or specific significant interactions.
-      // Here we log everything that looks like a click interaction.
-      gtag('event', 'click_interaction', eventParams);
-    });
-
-    // 2. Scroll Depth Tracking
-    let scrollDepths = { '25': false, '50': false, '75': false, '90': false };
-
-    window.addEventListener('scroll', function () {
-      // Throttle or simple check
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.offsetHeight;
-      const winHeight = window.innerHeight;
-      const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
-
-      Object.keys(scrollDepths).forEach(function (depth) {
-        if (!scrollDepths[depth] && scrollPercent >= depth) {
-          scrollDepths[depth] = true;
-          gtag('event', 'scroll_depth', {
-            event_category: 'engagement',
-            event_label: depth + '%',
-            value: depth
-          });
-        }
-      });
-    }, { passive: true });
+    gtag('config', 'GTM-M882FR8J');
   </script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/favicon.png" />
