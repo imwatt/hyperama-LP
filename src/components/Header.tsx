@@ -9,7 +9,8 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0 flex items-center gap-2">
-                        <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
+                        <img src="/icon.svg" alt="" width={32} height={32} className="object-contain" />
+                        <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 via-orange-500 to-purple-500">
                             Hyperama
                         </span>
                     </div>
@@ -20,7 +21,7 @@ const Header = () => {
                             <a href="#gameplay" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Gameplay</a>
                             <a
                                 href="https://app.hyperama.app"
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)] hover:shadow-[0_0_25px_rgba(168,85,247,0.7)]"
+                                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white px-4 py-2 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)] hover:shadow-[0_0_25px_rgba(168,85,247,0.7)]"
                             >
                                 Jogar Agora
                             </a>
@@ -59,7 +60,7 @@ const Header = () => {
                         </a>
                         <a
                             href="https://app.hyperama.app"
-                            className="mt-4 w-full block text-center bg-purple-600 text-white px-4 py-4 rounded-xl font-bold min-h-[48px]"
+                            className="mt-4 w-full block text-center bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-4 rounded-xl font-bold min-h-[48px]"
                         >
                             Jogar Agora
                         </a>

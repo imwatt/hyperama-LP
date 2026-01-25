@@ -18,7 +18,7 @@ const FinalCTA = () => (
                     className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6"
                 >
                     Pronto para mostrar que <br />
-                    <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-yellow-500 via-orange-500 to-purple-500 bg-clip-text text-transparent">
                         você entende de BBB 26?
                     </span>
                 </h2>
@@ -50,7 +50,7 @@ const Footer = () => {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                         {/* Brand */}
                         <div className="flex flex-col items-center md:items-start">
-                            <span className="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent mb-2">
+                            <span className="text-2xl font-black bg-gradient-to-r from-yellow-500 via-orange-500 to-purple-500 bg-clip-text text-transparent mb-2">
                                 Hyperama
                             </span>
                             <p className="text-gray-500 text-sm">

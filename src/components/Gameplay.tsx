@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Trophy, User, Zap, Sparkles } from 'lucide-react';
+import { Trophy, Zap, House } from 'lucide-react';
 
 // Hook para detectar viewport mobile
 const useIsMobile = () => {
@@ -21,7 +21,8 @@ const screens = [
         title: "Feed BBB 26",
         desc: "IA monitora as redes sociais em tempo real. Notícias, tweets e posts sobre os participantes do BBB 26 - tudo resumido com análise de sentimento.",
         color: "from-purple-600 to-indigo-600",
-        icon: <Sparkles size={24} />,
+        icon: <img src="/icon.svg" alt="Hyperama" width={24} height={24} className="object-contain" />,
+        navIcon: <House size={24} />,
         mockContent: (
             <div className="space-y-2 p-2 relative overflow-visible">
                 {/* POST 1: Twitter/X Card */}
@@ -43,7 +44,7 @@ const screens = [
                     </div>
                     <div className="flex gap-1.5 mt-2">
                         <button className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-1.5 rounded-lg text-[8px]">⚡ HYPAR</button>
-                        <button className="flex-1 bg-gradient-to-r from-purple-600 to-violet-700 text-white font-bold py-1.5 rounded-lg text-[8px]">💀 ZiKAR</button>
+                        <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-400 text-white font-bold py-1.5 rounded-lg text-[8px]">💀 ZiKAR</button>
                     </div>
                 </div>
 
@@ -77,7 +78,8 @@ const screens = [
         title: "Aposte no Participante",
         desc: "Viu a análise da IA sobre o participante? Agora é sua vez. HYPAR se vai bombar, ZIK4R se vai furar. Gaste sua energia com sabedoria!",
         color: "from-orange-500 to-yellow-500",
-        icon: <Zap size={24} />,
+        icon: <img src="/icon.svg" alt="Hyperama" width={24} height={24} className="object-contain" />,
+        navIcon: <Zap size={24} />,
         mockContent: (
             <div className="p-4 flex flex-col items-center justify-center h-full fade-in-scale">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 mb-3 flex items-center justify-center text-2xl ring-4 ring-white/20">
@@ -85,14 +87,14 @@ const screens = [
                 </div>
                 <div className="text-white font-bold text-sm mb-1">Trending Topic</div>
                 <div className="text-white/50 text-xs mb-4 flex items-center gap-1">
-                    <Sparkles size={12} className="text-purple-400" /> IA: Alta probabilidade
+                    <House size={12} className="text-purple-400" /> IA: Alta probabilidade
                 </div>
                 <div className="flex gap-3 w-full">
                     <button className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-orange-500/30 flex flex-col items-center hover:scale-105 active:scale-95 transition-transform">
                         <span className="text-lg">🔥</span>
                         <span>HYPAR</span>
                     </button>
-                    <button className="flex-1 bg-gradient-to-r from-purple-600 to-violet-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-purple-500/30 flex flex-col items-center hover:scale-105 active:scale-95 transition-transform">
+                    <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-400 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-purple-500/30 flex flex-col items-center hover:scale-105 active:scale-95 transition-transform">
                         <span className="text-lg">💀</span>
                         <span>ZiKAR</span>
                     </button>
@@ -105,7 +107,8 @@ const screens = [
         title: "Top Hypers",
         desc: "Acertou a previsão? Suba de nível e entre para o Top Hypers. Compita com fãs do BBB 26 de todo Brasil!",
         color: "from-yellow-500 to-orange-600",
-        icon: <Trophy size={24} />,
+        icon: <img src="/icon.svg" alt="Hyperama" width={24} height={24} className="object-contain" />,
+        navIcon: <Trophy size={24} />,
         mockContent: (
             <div className="p-4 space-y-3">
                 <div className="flex items-center justify-between bg-gradient-to-r from-yellow-500/20 to-orange-500/20 p-3 rounded-xl border border-yellow-500/30 fade-in-up">
@@ -162,7 +165,6 @@ const PhoneMockup = ({ activeScreen }: PhoneMockupProps) => (
                     {screens[activeScreen].icon}
                     <span>Hyperama</span>
                 </div>
-                <User className="text-white/70" size={18} />
             </div>
 
             {/* App Content */}
@@ -179,7 +181,7 @@ const PhoneMockup = ({ activeScreen }: PhoneMockupProps) => (
                         key={idx}
                         className={`p-2 rounded-xl transition-all duration-300 ${idx === activeScreen ? 'bg-white/20 text-white scale-110 -translate-y-0.5' : 'text-gray-600'}`}
                     >
-                        {s.icon}
+                        {s.navIcon}
                     </div>
                 ))}
             </div>
@@ -254,7 +256,7 @@ const GameplayMobile = () => {
                                 : 'bg-white/10 text-white/60'
                                 }`}
                         >
-                            <span className="text-lg">{screen.icon}</span>
+                            <span className="text-lg">{screen.navIcon}</span>
                             <span>{tabLabels[idx]}</span>
                         </button>
                     ))}
@@ -271,8 +273,8 @@ const GameplayMobile = () => {
                     <button
                         onClick={() => activeScreen > 0 && setActiveScreen(prev => prev - 1)}
                         className={`text-4xl sm:text-5xl transition-all duration-300 p-2 ${activeScreen > 0
-                                ? 'text-purple-400 hover:text-purple-300 hover:scale-110 active:scale-95 arrow-bounce-left'
-                                : 'text-gray-700 cursor-not-allowed'
+                            ? 'text-purple-400 hover:text-purple-300 hover:scale-110 active:scale-95 arrow-bounce-left'
+                            : 'text-gray-700 cursor-not-allowed'
                             }`}
                         disabled={activeScreen === 0}
                         aria-label="Tela anterior"
@@ -290,8 +292,8 @@ const GameplayMobile = () => {
                     <button
                         onClick={() => activeScreen < screens.length - 1 && setActiveScreen(prev => prev + 1)}
                         className={`text-4xl sm:text-5xl transition-all duration-300 p-2 ${activeScreen < screens.length - 1
-                                ? 'text-purple-400 hover:text-purple-300 hover:scale-110 active:scale-95 arrow-bounce-right'
-                                : 'text-gray-700 cursor-not-allowed'
+                            ? 'text-purple-400 hover:text-purple-300 hover:scale-110 active:scale-95 arrow-bounce-right'
+                            : 'text-gray-700 cursor-not-allowed'
                             }`}
                         disabled={activeScreen === screens.length - 1}
                         aria-label="Próxima tela"

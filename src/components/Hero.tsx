@@ -101,7 +101,7 @@ const HeroCard = ({ hypeProgress, showHypePeak }: HeroCardProps) => {
                 </div>
 
                 <button
-                    className="bg-gradient-to-br from-purple-600 to-violet-700 p-4 rounded-xl flex flex-col items-center shadow-lg shadow-purple-500/30 hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.98] transition-transform"
+                    className="bg-gradient-to-br from-purple-600 to-pink-400 p-4 rounded-xl flex flex-col items-center shadow-lg shadow-purple-500/30 hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.98] transition-transform"
                     aria-label="ZiKAR - Apostar que vai furar"
                 >
                     <span className="text-2xl mb-1" role="img" aria-label="skull">💀</span>
@@ -239,7 +239,7 @@ const Hero = () => {
 
                     {/* Title */}
                     <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-8 leading-[0.9] fade-in-up delay-100">
-                        <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-x">
+                        <span className="bg-gradient-to-r from-yellow-500 via-orange-500 to-purple-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-x">
                             HYPERAMA
                         </span>
                     </h1>
