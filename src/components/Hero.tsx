@@ -153,13 +153,18 @@ const Hero = () => {
     }, []);
 
     // Optimized scroll detection - ONLY on desktop for performance
+    // Reset state when switching to mobile
     useEffect(() => {
-        // Skip scroll effects entirely on mobile for performance
         if (!isDesktop) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setScrollProgress(0);
             setShowHypePeak(false);
-            return;
         }
+    }, [isDesktop]);
+
+    // Optimized scroll detection - ONLY on desktop for performance
+    useEffect(() => {
+        if (!isDesktop) return;
 
         const heroElement = heroRef.current;
         if (!heroElement) return;

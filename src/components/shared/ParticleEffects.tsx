@@ -64,6 +64,7 @@ const ParticlePortal = ({ isActive, particles }: { isActive: boolean; particles:
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
         return () => setMounted(false);
     }, []);
@@ -154,4 +155,5 @@ export const JogarAgoraButton = ({
 };
 
 // Export generateParticles for external use if needed
-export { generateParticles };
+// export { generateParticles }; // Commented out to fix fast refresh warning since it's not currently used externally
+
