@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUp, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 // =============================================================================
 // SWIPE DEMO COMPONENT - Interactive tutorial showing swipe gestures

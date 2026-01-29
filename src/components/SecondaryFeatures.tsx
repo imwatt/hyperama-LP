@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Newspaper, Trophy, Zap, Sparkles, TrendingUp } from 'lucide-react';
+import { Newspaper, Trophy, Sparkles, TrendingUp } from 'lucide-react';
 
 // =============================================================================
 // SECONDARY FEATURES - Feed, Ranking, Energy System
