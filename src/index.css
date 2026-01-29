@@ -16,6 +16,7 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -613,4 +614,44 @@ textarea {
     border-color: rgba(168, 85, 247, 0.7);
     box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
   }
+}
+
+/* =============================================================================
+   GAMEPLAY MOCKUP SWIPE ANIMATION
+   ============================================================================= */
+
+/* Continuous swipe card animation for mockup */
+@keyframes swipeCard {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+
+  /* Drag phase - subtle movement right */
+  15% {
+    transform: translateX(8px) translateY(-3px) rotate(2deg);
+  }
+
+  /* Hold drag position briefly */
+  25% {
+    transform: translateX(8px) translateY(-3px) rotate(2deg);
+  }
+
+  /* Swipe motion - move further right */
+  45% {
+    transform: translateX(20px) translateY(10px) rotate(8deg);
+  }
+
+  /* Quick reset */
+  55% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+
+  /* Pause at neutral before repeating */
+  100% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+}
+
+.animate-swipe-card {
+  animation: swipeCard 4s ease-in-out infinite;
 }

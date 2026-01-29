@@ -5,8 +5,9 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 
 // Below the fold - lazy load
-const Features = lazy(() => import('./components/Features'));
-const HowItWorks = lazy(() => import('./components/HowItWorks'));
+const SwipeDemo = lazy(() => import('./components/SwipeDemo'));
+const HyparVsZikar = lazy(() => import('./components/HyparVsZikar'));
+const SecondaryFeatures = lazy(() => import('./components/SecondaryFeatures'));
 const Gameplay = lazy(() => import('./components/Gameplay'));
 const Footer = lazy(() => import('./components/Footer'));
 const Background = lazy(() => import('./components/Background'));
@@ -26,8 +27,9 @@ function App() {
       <main className="relative z-10">
         <Hero />
         <Suspense fallback={<SectionFallback />}>
-          <Features />
-          <HowItWorks />
+          <SwipeDemo />
+          <HyparVsZikar />
+          <SecondaryFeatures />
           <Gameplay />
         </Suspense>
       </main>

@@ -45,7 +45,7 @@ const Header = () => {
                 <div className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         <a
-                            href="#features"
+                            href="#como-jogar"
                             onClick={() => setIsMenuOpen(false)}
                             className="text-gray-300 hover:text-white block px-3 py-3 rounded-md text-base font-medium min-h-[48px] flex items-center"
                         >

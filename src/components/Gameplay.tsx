@@ -17,87 +17,134 @@ const useIsMobile = () => {
 
 const screens = [
     {
-        id: "feed",
-        title: "Feed BBB 26",
-        desc: "IA monitora as redes sociais em tempo real. Notícias, tweets e posts sobre os participantes do BBB 26 - tudo resumido com análise de sentimento.",
-        color: "from-purple-600 to-indigo-600",
+        id: "swipe",
+        title: "Jogo de Swipe",
+        desc: "Deslize cards dos participantes. DIREITA para HYPAR (vai bombar), ESQUERDA para ZIK4R (vai furar). Simples assim!",
+        color: "from-orange-500 to-yellow-500",
         icon: <img src="/icon.svg" alt="Hyperama" width={24} height={24} className="object-contain" />,
-        navIcon: <House size={24} />,
+        navIcon: <Zap size={24} />,
         mockContent: (
-            <div className="space-y-2 p-2 relative overflow-visible">
-                {/* POST 1: Twitter/X Card */}
-                <div className="bg-gray-900/80 rounded-xl border border-white/10 p-2 fade-in-up">
-                    <span className="inline-block px-1.5 py-0.5 rounded-full bg-pink-500 text-white text-[7px] font-bold mb-1.5">🎀 FOFOCA</span>
-                    <div className="text-white/90 text-[8px] leading-relaxed mb-2">
-                        Sarah comenta sobre Jordana, gerando polêmica.
-                    </div>
-                    <div className="bg-[#15202b] rounded-lg p-2 border border-white/5">
-                        <div className="flex items-center gap-1.5 mb-1">
-                            <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-[8px] font-bold">B</div>
-                            <div>
-                                <span className="text-white text-[8px] font-bold">Bruno</span>
-                                <span className="text-blue-400 text-[6px] ml-0.5">✓</span>
-                            </div>
-                            <span className="text-white/30 text-[8px] ml-auto">𝕏</span>
+            <div className="p-3 flex flex-col items-center justify-center h-full fade-in-scale relative overflow-visible">
+                {/* Swipe Card Stack with Motion Effect */}
+                <div className="relative w-full max-w-[200px] h-[280px]">
+                    {/* Third Card - Far back */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl opacity-15 scale-85 -translate-y-4 blur-[2px]">
+                        <div className="h-full flex items-center justify-center">
+                            <div className="text-4xl opacity-50">💎</div>
                         </div>
-                        <div className="text-white/80 text-[7px]">Imagina a Sarah falando isso da Jordana 😂</div>
                     </div>
-                    <div className="flex gap-1.5 mt-2">
-                        <button className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-1.5 rounded-lg text-[8px]">⚡ HYPAR</button>
-                        <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-400 text-white font-bold py-1.5 rounded-lg text-[8px]">💀 ZiKAR</button>
+
+                    {/* Second Card - Behind, slight left position */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-lg border-2 border-white/10 overflow-hidden scale-92 -translate-y-2 -translate-x-1 -rotate-2 opacity-50">
+                        <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-black/20" />
+                        <div className="h-full flex items-center justify-center">
+                            <div className="text-5xl">⭐</div>
+                        </div>
+                    </div>
+
+                    {/* Main Card - Tilted right with swipe effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl shadow-2xl border-2 border-white/30 overflow-hidden transform translate-x-4 rotate-8 transition-transform animate-swipe-card">
+                        {/* Glass effect */}
+                        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/20 to-transparent" />
+
+                        {/* Card Content */}
+                        <div className="h-full flex flex-col justify-between p-3 relative z-10">
+                            {/* Top Badge */}
+                            <div className="flex items-center justify-between">
+                                <div className="px-2 py-1 bg-green-500/30 text-green-300 rounded-lg text-[8px] font-bold border border-green-400/50">
+                                    🔥 HOT
+                                </div>
+                                <div className="w-6 h-6 bg-purple-500/30 rounded-lg flex items-center justify-center text-xs">
+                                    🤖
+                                </div>
+                            </div>
+
+                            {/* Center - Participant */}
+                            <div className="flex-1 flex items-center justify-center">
+                                <div className="text-center">
+                                    <div className="text-6xl mb-2 drop-shadow-lg">🔥</div>
+                                    <div className="bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
+                                        <div className="text-white text-[10px] font-bold">Participante</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Bottom - AI Analysis */}
+                            <div className="bg-black/30 backdrop-blur-sm rounded-xl p-2 border border-white/20">
+                                <div className="text-white/70 text-[7px]">IA: Alta repercussão</div>
+                                <div className="text-white text-[9px] font-semibold">📈 78% positivo</div>
+                            </div>
+                        </div>
+
+                        {/* HYPAR Label (visible on the tilted card) */}
+                        <div className="absolute top-8 left-6 z-20 pointer-events-none transform -rotate-8">
+                            <div className="border-[3px] border-green-500 text-green-500 font-black text-base px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-sm shadow-[0_0_20px_rgba(34,197,94,0.9)]">
+                                HYPAR
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Motion Trail Effect 1 - Multiple ghosts for blur */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl opacity-8 scale-[0.98] translate-x-2 rotate-5 blur-[3px] pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl opacity-5 scale-[0.96] translate-x-1 rotate-3 blur-[4px] pointer-events-none" />
+
+                    {/* Curved Arrow for direction */}
+                    <div className="absolute -left-10 top-1/2 -translate-y-1/2 text-purple-400/30 text-xl opacity-60">
+                        ←
+                    </div>
+                    <div className="absolute -right-10 top-1/2 -translate-y-1/2">
+                        <div className="flex flex-col items-center">
+                            <div className="text-green-400 text-2xl font-black animate-pulse">→</div>
+                            <div className="text-green-400/60 text-[8px] font-bold mt-1">SWIPE</div>
+                        </div>
                     </div>
                 </div>
 
-                {/* POST 2 */}
-                <div className="bg-gray-900/80 rounded-xl border border-white/10 p-2 fade-in-up delay-100">
-                    <span className="inline-block px-1.5 py-0.5 rounded-full bg-green-500 text-white text-[7px] font-bold mb-1.5">📺 ESTRATÉGIA</span>
-                    <div className="text-white/90 text-[8px] leading-relaxed mb-2">
-                        Babu lidera sorteio de compras; Xepa debate valores.
+                {/* Swipe Instructions */}
+                <div className="mt-4 flex items-center gap-3 text-[9px]">
+                    <div className="text-purple-400/50 flex items-center gap-1">
+                        <span>←</span>
+                        <span>ZIK4R</span>
                     </div>
-                    <div className="bg-black rounded-lg overflow-hidden border border-white/5">
-                        <div className="flex items-center gap-1.5 p-1.5 bg-gray-900">
-                            <div className="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center">
-                                <span className="text-[6px]">📰</span>
-                            </div>
-                            <span className="text-white text-[7px] font-bold">defatoonline</span>
-                        </div>
-                        <div className="h-16 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center relative">
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                            <div className="text-center z-10">
-                                <span className="text-white/80 text-[8px] font-bold block">BBB 26</span>
-                                <span className="text-yellow-400 text-[6px]">XEPA DEBATE VALORES</span>
-                            </div>
-                        </div>
+                    <div className="text-gray-600">•</div>
+                    <div className="text-green-400 flex items-center gap-1 font-bold">
+                        <span>HYPAR</span>
+                        <span>→</span>
                     </div>
                 </div>
             </div>
         )
     },
     {
-        id: "hype",
-        title: "Aposte no Participante",
-        desc: "Viu a análise da IA sobre o participante? Agora é sua vez. HYPAR se vai bombar, ZIK4R se vai furar. Gaste sua energia com sabedoria!",
-        color: "from-orange-500 to-yellow-500",
+        id: "feed",
+        title: "Feed BBB 26",
+        desc: "IA monitora redes sociais em tempo real. Notícias, tweets e posts sobre os participantes - tudo com análise de sentimento.",
+        color: "from-purple-600 to-indigo-600",
         icon: <img src="/icon.svg" alt="Hyperama" width={24} height={24} className="object-contain" />,
-        navIcon: <Zap size={24} />,
+        navIcon: <House size={24} />,
         mockContent: (
-            <div className="p-4 flex flex-col items-center justify-center h-full fade-in-scale">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 mb-3 flex items-center justify-center text-2xl ring-4 ring-white/20">
-                    🔥
+            <div className="space-y-2 p-2 relative overflow-visible">
+                {/* News Post 1 */}
+                <div className="bg-gray-900/80 rounded-xl border border-white/10 p-2 fade-in-up">
+                    <span className="inline-block px-1.5 py-0.5 rounded-full bg-pink-500 text-white text-[7px] font-bold mb-1.5">🎀 FOFOCA</span>
+                    <div className="text-white/90 text-[8px] leading-relaxed mb-2">
+                        Participante comenta sobre brother, gerando polêmica nas redes.
+                    </div>
+                    <div className="bg-[#15202b] rounded-lg p-2 border border-white/5">
+                        <div className="flex items-center gap-1.5 mb-1">
+                            <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-[8px] font-bold">X</div>
+                            <span className="text-white text-[8px] font-bold">Twitter</span>
+                        </div>
+                        <div className="text-white/80 text-[7px]">"Nossa, não acredito que ele disse isso! 😱"</div>
+                    </div>
                 </div>
-                <div className="text-white font-bold text-sm mb-1">Trending Topic</div>
-                <div className="text-white/50 text-xs mb-4 flex items-center gap-1">
-                    <House size={12} className="text-purple-400" /> IA: Alta probabilidade
-                </div>
-                <div className="flex gap-3 w-full">
-                    <button className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-orange-500/30 flex flex-col items-center hover:scale-105 active:scale-95 transition-transform">
-                        <span className="text-lg">🔥</span>
-                        <span>HYPAR</span>
-                    </button>
-                    <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-400 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-purple-500/30 flex flex-col items-center hover:scale-105 active:scale-95 transition-transform">
-                        <span className="text-lg">💀</span>
-                        <span>ZiKAR</span>
-                    </button>
+
+                {/* News Post 2 */}
+                <div className="bg-gray-900/80 rounded-xl border border-white/10 p-2 fade-in-up delay-100">
+                    <span className="inline-block px-1.5 py-0.5 rounded-full bg-green-500 text-white text-[7px] font-bold mb-1.5">📺 ESTRATÉGIA</span>
+                    <div className="text-white/90 text-[8px] leading-relaxed">
+                        Líder define imunidade e casa fica agitada.
+                    </div>
                 </div>
             </div>
         )
@@ -230,7 +277,7 @@ const GameplayMobile = () => {
     };
 
     // Short labels for tabs
-    const tabLabels = ['Feed', 'Apostar', 'Ranking'];
+    const tabLabels = ['Jogar', 'Feed', 'Ranking'];
 
     return (
         <section id="gameplay" className="relative z-10 bg-black py-16 overflow-hidden">
@@ -369,7 +416,7 @@ const GameplayDesktop = () => {
     return (
         <section id="gameplay" className="relative z-10 bg-black">
             {/* Sticky Phone Container */}
-            <div className="sticky top-0 h-screen flex items-center pointer-events-none">
+            <div className="sticky top-0 z-20 h-screen flex items-center pointer-events-none">
                 <div className="w-full max-w-6xl mx-auto px-4 flex flex-row items-center gap-16">
                     {/* Phone Mockup - Fixed position while scrolling */}
                     <div className="relative flex-shrink-0 pointer-events-auto">
